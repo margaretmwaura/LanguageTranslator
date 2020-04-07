@@ -36,10 +36,10 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onPageSelected(position: Int) {
-                if (position === vpIntro.getAdapter()?.getCount()?.minus(1)) {
-                    val reg = Intent(this@MainActivity, Splash::class.java)
-                    startActivity(reg)
-                }
+//                if (position === vpIntro.getAdapter()?.getCount()?.minus(1)) {
+//                    val reg = Intent(this@MainActivity, Splash::class.java)
+//                    startActivity(reg)
+//                }
             }
 
         })
