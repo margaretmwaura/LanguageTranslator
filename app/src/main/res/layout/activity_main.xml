@@ -23,7 +23,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="top"
-            app:tabGravity="center"
+            app:tabBackground="@drawable/tab_selector"
+            app:tabSelectedTextColor="#000"
+            app:tabTextColor="#FFF"
             app:tabIndicatorHeight="0dp"/>
 
     </androidx.viewpager.widget.ViewPager>

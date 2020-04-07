@@ -15,18 +15,24 @@ class IntroViewPagerAdapter(supportFragmentManager: FragmentManager) : FragmentS
 
         Log.d("Position","This is the position $position")
         when (position) {
-            0 -> return ListFragment()
-            1 -> return AboutFragment()
+            0 -> return TranslateFragment()
+            1 -> return ListFragment()
+            2 -> return AboutFragment()
         }
         return ListFragment() //does not happen
     }
     override fun getCount(): Int
     {
-        return 2
+        return 3
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        return "Tab " + (position + 1)
+        when (position) {
+            0 -> return "HOME"
+            1 -> return "A-Z"
+            2 -> return "ABOUT"
+        }
+        return null
     }
 
 }
