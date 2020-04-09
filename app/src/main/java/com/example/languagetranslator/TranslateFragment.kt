@@ -24,7 +24,7 @@ class TranslateFragment : Fragment() {
         val binding = FragmentTranslateBinding.inflate(inflater,container,false)
 
         binding.fab.setOnClickListener {
-            val intent = Intent(activity!!, Splash::class.java)
+            val intent = Intent(activity!!, NewWord::class.java)
             startActivity(intent)
         }
         return binding.root
