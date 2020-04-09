@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "todo_items")
+@Entity(tableName = "word_instance")
 data class WordInstance(
     @PrimaryKey(autoGenerate = true)
     var id: Int,
