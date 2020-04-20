@@ -1,6 +1,7 @@
-package com.example.languagetranslator
+package com.example.languagetranslator.presenter
 
 import androidx.room.*
+import com.example.languagetranslator.model.WordInstance
 
 @Dao
 interface WordInstanceDao {

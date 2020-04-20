@@ -1,12 +1,12 @@
-package com.example.languagetranslator
+package com.example.languagetranslator.view
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.view.WindowManager
 import androidx.viewpager.widget.ViewPager
+import com.example.languagetranslator.model.IntroViewPagerAdapter
+import com.example.languagetranslator.R
+import com.example.languagetranslator.presenter.ZoomOutPageTransformer
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -14,7 +14,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val introViewPagerAdapter = IntroViewPagerAdapter(supportFragmentManager)
+        val introViewPagerAdapter =
+            IntroViewPagerAdapter(
+                supportFragmentManager
+            )
         vpIntro.adapter = introViewPagerAdapter
         vpIntro.setPageTransformer(true,
             ZoomOutPageTransformer()

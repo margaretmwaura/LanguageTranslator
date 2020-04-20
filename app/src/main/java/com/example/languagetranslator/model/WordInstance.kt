@@ -1,4 +1,4 @@
-package com.example.languagetranslator
+package com.example.languagetranslator.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
