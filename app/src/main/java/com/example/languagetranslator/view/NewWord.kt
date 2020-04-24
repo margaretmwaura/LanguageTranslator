@@ -12,6 +12,7 @@ import com.example.languagetranslator.databinding.ActivityNewWordBinding
 import com.example.languagetranslator.model.WordInstance
 import com.example.languagetranslator.presenter.NewWordViewModel
 import com.example.languagetranslator.presenter.ViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -53,7 +54,10 @@ class NewWord : AppCompatActivity() , HasSupportFragmentInjector {
             disposable.add(addNewWordViewModel.saveNewWord(wordInstance)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ Toast.makeText(this, "The name was successfully added", Toast.LENGTH_SHORT).show()},
+                .subscribe(
+                    { Snackbar.make(it, "A new name has been added", Snackbar.LENGTH_SHORT)
+                        .show();
+                    },
                     { error -> Log.e("Adding name", "Unable to update username, ${error}) " )})) }
 
 

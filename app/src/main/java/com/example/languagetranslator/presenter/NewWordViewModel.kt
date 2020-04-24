@@ -17,10 +17,7 @@ import javax.inject.Inject
 
 class NewWordViewModel  @Inject constructor(application: Application): AndroidViewModel(application){
 
-    var _words = MutableLiveData<List<WordInstance>>()
-
-    val words: LiveData<List<WordInstance>>
-        get() = _words
+    var words: LiveData<List<WordInstance>>
 
     private var viewModelJob = Job()
 
@@ -31,7 +28,7 @@ class NewWordViewModel  @Inject constructor(application: Application): AndroidVi
     init {
         val wordsDao = AppDatabase.invoke(application).wordInstanceDao()
         repository = NewWordRepository(wordsDao)
-        _words = repository.allWords as MutableLiveData<List<WordInstance>>
+        words = repository.allWords
     }
 
     fun saveNewWord(wordInstance: WordInstance) : Completable
