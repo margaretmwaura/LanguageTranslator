@@ -3,7 +3,6 @@ package com.example.languagetranslator.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -14,7 +13,6 @@ import com.example.languagetranslator.presenter.NewWordViewModel
 import com.example.languagetranslator.presenter.ViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import dagger.android.AndroidInjection
-import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -54,10 +52,7 @@ class NewWord : AppCompatActivity() , HasSupportFragmentInjector {
             disposable.add(addNewWordViewModel.saveNewWord(wordInstance)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { Snackbar.make(it, "A new name has been added", Snackbar.LENGTH_SHORT)
-                        .show();
-                    },
+                .subscribe({ Snackbar.make(it, "A new name has been added", Snackbar.LENGTH_SHORT).show()},
                     { error -> Log.e("Adding name", "Unable to update username, ${error}) " )})) }
 
 

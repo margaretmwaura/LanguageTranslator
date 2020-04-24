@@ -9,4 +9,10 @@ abstract class ActivityBuildersModule {
 
     @ContributesAndroidInjector(modules = [NewWordViewModelModule::class])
     internal abstract fun contributeAuthActivity(): NewWord
+
+    @ContributesAndroidInjector(modules = [NewWordViewModelModule::class])
+    internal abstract fun contributeListFragment(): ListFragment
+
+    @ContributesAndroidInjector(modules = [NewWordViewModelModule::class])
+    internal abstract fun contributeMainActivity(): MainActivity
 }
