@@ -57,6 +57,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     // This is for the room dependency
+    //noinspection GradleDependency
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
@@ -71,5 +72,9 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
     kaptTest "com.google.dagger:dagger-compiler:$dagger_version"
     kaptAndroidTest "com.google.dagger:dagger-compiler:$dagger_version"
+
+    implementation "android.arch.persistence.room:rxjava2:$room_version"
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
 }
