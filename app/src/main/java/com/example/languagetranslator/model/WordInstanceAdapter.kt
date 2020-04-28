@@ -24,7 +24,9 @@ class WordInstanceAdapter(val clickListener: WordInstanceListener) : ListAdapter
     }
 
     class WordInstanceeViewHolder(val binding: WordInstanceViewholderBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(eventType: WordInstance, clickListener: WordInstanceListener) {
+        fun bind(wordInstance: WordInstance, clickListener: WordInstanceListener) {
+            binding.wordInstance = wordInstance
+            binding.wordInstanceListener = clickListener
             binding.executePendingBindings()
         }
     }

@@ -8,9 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.example.languagetranslator.R
 import com.example.languagetranslator.databinding.FragmentListBinding
-import com.example.languagetranslator.databinding.FragmentTranslateBinding
 import com.example.languagetranslator.model.WordInstanceAdapter
 import com.example.languagetranslator.presenter.NewWordViewModel
 import com.example.languagetranslator.presenter.ViewModelFactory
@@ -36,6 +34,8 @@ class ListFragment : DaggerFragment() {
     ): View? {
         // Inflate the layout for this fragment
         val binding = FragmentListBinding.inflate(inflater,container,false)
+
+        binding.lifecycleOwner = this
 
         addNewWordViewModel = ViewModelProviders.of(this, mViewModelFactory).get(NewWordViewModel::class.java)
 
