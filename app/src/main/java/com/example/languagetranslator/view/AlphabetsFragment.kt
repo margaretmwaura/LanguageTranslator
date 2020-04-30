@@ -11,7 +11,6 @@ import com.example.languagetranslator.databinding.FragmentListBinding
 
 class AlphabetsFragment : Fragment() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

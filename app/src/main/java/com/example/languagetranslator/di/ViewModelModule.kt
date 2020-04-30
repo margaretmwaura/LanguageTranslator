@@ -1,6 +1,7 @@
-package com.example.languagetranslator.presenter
+package com.example.languagetranslator.di
 
 import androidx.lifecycle.ViewModel
+import com.example.languagetranslator.presenter.NewWordViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

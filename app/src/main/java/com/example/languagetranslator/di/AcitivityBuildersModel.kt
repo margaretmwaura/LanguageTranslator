@@ -1,4 +1,4 @@
-package com.example.languagetranslator.presenter
+package com.example.languagetranslator.di
 
 import com.example.languagetranslator.view.*
 import dagger.Module

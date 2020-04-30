@@ -1,6 +1,7 @@
-package com.example.languagetranslator.presenter
+package com.example.languagetranslator.di
 
 import androidx.lifecycle.ViewModelProvider
+import com.example.languagetranslator.presenter.ViewModelFactory
 import dagger.Binds
 import dagger.Module
 
