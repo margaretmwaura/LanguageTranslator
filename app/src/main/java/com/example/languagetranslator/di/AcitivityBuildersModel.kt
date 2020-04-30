@@ -15,4 +15,7 @@ abstract class ActivityBuildersModule {
 
     @ContributesAndroidInjector(modules = [NewWordViewModelModule::class])
     internal abstract fun contributeMainActivity(): MainActivity
+
+    @ContributesAndroidInjector(modules = [VowelViewModelModule::class])
+    internal abstract fun contributeAlphabets(): AlphabetsFragment
 }
