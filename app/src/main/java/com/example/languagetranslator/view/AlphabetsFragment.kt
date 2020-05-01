@@ -1,16 +1,14 @@
 package com.example.languagetranslator.view
 
 import android.content.Context
+import android.media.MediaPlayer
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
-import com.example.languagetranslator.R
 import com.example.languagetranslator.databinding.FragmentAlphabetsBinding
-import com.example.languagetranslator.databinding.FragmentListBinding
-import com.example.languagetranslator.presenter.NewWordViewModel
 import com.example.languagetranslator.presenter.ViewModelFactory
 import com.example.languagetranslator.presenter.VowelVIewModel
 import dagger.android.support.AndroidSupportInjection
@@ -46,6 +44,21 @@ class AlphabetsFragment : DaggerFragment() {
 
         vowelViewModel = ViewModelProviders.of(this, mViewModelFactory).get(VowelVIewModel::class.java)
 
+        val mp = MediaPlayer()
+        try {
+
+            mp.setDataSource(Environment.getExternalStorageDirectory().path.toString() + "/audio.mp3")
+
+            mp.prepare()
+
+        } catch (e: Exception) {
+
+            e.printStackTrace()
+        }
+
+        binding.audio.setOnClickListener {
+            mp.start()
+        }
         return binding.root
     }
 
