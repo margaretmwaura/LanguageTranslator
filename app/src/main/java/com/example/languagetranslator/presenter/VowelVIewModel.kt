@@ -25,12 +25,14 @@ class VowelVIewModel @Inject constructor(val network : Network):  ViewModel(){
 
     init {
         getAllTheVowels()
+        getAudio()
     }
 
     private fun getAllTheVowels()
     {
         coroutineScope.launch {
 
+            Log.e("We","We is doing this people")
             var results = network.getVoewlData()
 
             try {
@@ -39,7 +41,24 @@ class VowelVIewModel @Inject constructor(val network : Network):  ViewModel(){
                  vowels.postValue(data)
             }catch (e : Exception)
             {
+                 Log.e("Babes","Babes there was an error ${e.message}")
+            }
+        }
+    }
 
+    private fun getAudio()
+    {
+        coroutineScope.launch {
+            var audios = network.getAudios()
+
+            try
+            {
+                val data = audios.await()
+                Log.d("Data","Here is the data my people ${data.byteStream()}")
+
+            }catch (e : Exception)
+            {
+                Log.e("Babes","Babes there was an error while getting audio${e.message}")
             }
         }
     }

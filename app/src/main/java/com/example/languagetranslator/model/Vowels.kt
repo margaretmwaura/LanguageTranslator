@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 data class Vowels(
     @PrimaryKey(autoGenerate = true)
     var id: Int,
-    @ColumnInfo(name = "alphabet") var alphabel: String,
-    @ColumnInfo(name = "description") var description: String
+    @ColumnInfo(name = "name") var name : String,
+    @ColumnInfo(name = "description") var description: String,
+    @ColumnInfo(name = "filename") var filename: String
 )
