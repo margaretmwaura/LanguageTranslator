@@ -3,17 +3,18 @@ package com.example.languagetranslator.presenter
 import androidx.lifecycle.LiveData
 import com.example.languagetranslator.model.Vowels
 import io.reactivex.Completable
+import javax.inject.Inject
 
-class VowelRepository(private val wordDao: WordInstanceDao) {
+class VowelRepository constructor(private val vowelInstanceDao: VowelInstanceDao) {
 
-    val allWords: LiveData<List<Vowels>> = wordDao.getAllVowels()
+    val allWords: LiveData<List<Vowels>> = vowelInstanceDao.getAllVowels()
 
     fun insert(vowels: Vowels) : Completable {
-        return wordDao.insertVowel(vowels)
+        return vowelInstanceDao.insertVowel(vowels)
     }
 
-    fun insertAll(vowel_list : List<Vowels>) : Completable {
-
-        return wordDao.insertAllVowels(vowel_list)
-    }
+//    fun insertAll(vowel_list : List<Vowels>) : Completable {
+//
+////        return vowelInstanceDao.insertAllVowels(vowel_list)
+//    }
 }

@@ -1,10 +1,13 @@
 package com.example.languagetranslator.presenter
 
+import android.app.Application
 import android.os.Environment
 import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.languagetranslator.model.AppDatabase
 import com.example.languagetranslator.model.Vowels
 import com.example.languagetranslator.service.Network
 import kotlinx.coroutines.CoroutineScope
@@ -18,7 +21,7 @@ import java.io.*
 import javax.inject.Inject
 
 
-class VowelVIewModel @Inject constructor(val network : Network):  ViewModel() {
+class VowelVIewModel @Inject constructor(val network : Network , application: Application): AndroidViewModel(application) {
     private var viewModelJob = Job()
 
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
@@ -30,7 +33,11 @@ class VowelVIewModel @Inject constructor(val network : Network):  ViewModel() {
 
     private val mutex = Mutex();
 
+    private val repository : VowelRepository
+
     init {
+        val vowelDao = AppDatabase.invoke(application).vowelInstanceDao()
+        repository = VowelRepository(vowelDao)
         getAllTheVowels()
     }
 
@@ -44,6 +51,8 @@ class VowelVIewModel @Inject constructor(val network : Network):  ViewModel() {
                 Log.d("Data", "Here is the data my people $data")
 
                 vowels.postValue(data)
+
+//                repository.insertAll(data)
 
                 data.forEach{
                     getAudio(it.filename)

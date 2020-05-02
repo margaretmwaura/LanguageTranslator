@@ -4,11 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.languagetranslator.presenter.VowelInstanceDao
 import com.example.languagetranslator.presenter.WordInstanceDao
 
-@Database(entities = arrayOf(WordInstance::class), version = 1)
+@Database(entities = arrayOf(WordInstance::class,Vowels::class), version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun wordInstanceDao(): WordInstanceDao
+    abstract fun vowelInstanceDao() : VowelInstanceDao
 
     companion object {
         @Volatile private var instance: AppDatabase? = null

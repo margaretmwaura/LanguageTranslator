@@ -22,14 +22,4 @@ interface WordInstanceDao {
 
     @Delete
     fun delete(todo: WordInstance)
-
-    @Query("SELECT * FROM vowels")
-    fun getAllVowels() : LiveData<List<Vowels>>
-
-    @Insert
-    fun insertVowel(vararg vowel : Vowels) : Completable
-
-    @Insert
-    fun insertAllVowels(vararg vowel_list : List<Vowels>) : Completable
-
 }
