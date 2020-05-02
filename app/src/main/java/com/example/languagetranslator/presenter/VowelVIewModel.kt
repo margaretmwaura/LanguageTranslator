@@ -54,9 +54,9 @@ class VowelVIewModel @Inject constructor(val network : Network , application: Ap
 
                 repository.insertAll(data)
 
-                data.forEach{
-                    getAudio(it.filename)
-                }
+//                data.forEach{
+//                    getAudio(it.filename)
+//                }
             } catch (e: Exception) {
                 Log.e("Babes", "Babes there was an error ${e.message}")
             }

@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import com.example.languagetranslator.model.Vowels
 import io.reactivex.Completable
+import javax.inject.Inject
 
 @Dao
 interface VowelInstanceDao {

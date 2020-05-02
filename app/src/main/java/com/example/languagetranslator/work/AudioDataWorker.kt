@@ -12,20 +12,19 @@ import com.example.languagetranslator.service.Network
 import javax.inject.Inject
 
 
-class AudioDataWorker(networkService: Network,appContext: Context, params: WorkerParameters) : Worker(appContext, params)  {
-    private lateinit var vowelVIewModel: VowelVIewModel
-    lateinit var mViewModelFactory : ViewModelFactory
+class AudioDataWorker(vowelRepository: VowelRepository,networkService: Network,appContext: Context, params: WorkerParameters) : Worker(appContext, params)  {
 
     override fun doWork(): Result {
         return Result.success()
     }
 
     class Factory @Inject constructor(
+        private val vowelRepository: VowelRepository,
         private val network: Network
         ): ChildWorkerFactory {
 
         override fun create(appContext: Context, params: WorkerParameters): Worker {
-            return AudioDataWorker(network, appContext, params)
+            return AudioDataWorker(vowelRepository,network, appContext, params)
         }
     }
 }
