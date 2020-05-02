@@ -15,7 +15,7 @@ class Network @Inject constructor(){
         return  listResult
     }
 
-    fun getAudios(filename : String) : Deferred<ResponseBody>
+    fun getAudios(filename : String) : ResponseBody
     {
         var audio = RetrofitFactory.makeRetrofitService().getAudios(filename)
 

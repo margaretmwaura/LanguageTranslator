@@ -12,7 +12,7 @@ import javax.inject.Inject
 interface VowelInstanceDao {
 
     @Query("SELECT * FROM vowels")
-    fun getAllVowels() : LiveData<List<Vowels>>
+    fun getAllVowels() : List<Vowels>
 
     @Insert
     fun insertVowel(vararg vowel : Vowels) : Completable

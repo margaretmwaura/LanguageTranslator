@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class VowelRepository constructor(private val vowelInstanceDao: VowelInstanceDao) {
 
-    val allWords: LiveData<List<Vowels>> = vowelInstanceDao.getAllVowels()
+    val allVowels: List<Vowels> = vowelInstanceDao.getAllVowels()
 
     fun insert(vowels: Vowels) : Completable {
         return vowelInstanceDao.insertVowel(vowels)

@@ -14,5 +14,5 @@ interface apiservice {
 
     @Headers("Accept: application/json")
     @GET("api/videos")
-    fun getAudios(@Query("filename") name : String) : Deferred<ResponseBody>
+    fun getAudios(@Query("filename") name : String) :ResponseBody
 }
