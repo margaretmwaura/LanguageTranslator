@@ -52,7 +52,7 @@ class VowelVIewModel @Inject constructor(val network : Network , application: Ap
 
                 vowels.postValue(data)
 
-//                repository.insertAll(data)
+                repository.insertAll(data)
 
                 data.forEach{
                     getAudio(it.filename)

@@ -13,8 +13,8 @@ class VowelRepository constructor(private val vowelInstanceDao: VowelInstanceDao
         return vowelInstanceDao.insertVowel(vowels)
     }
 
-//    fun insertAll(vowel_list : List<Vowels>) : Completable {
-//
-////        return vowelInstanceDao.insertAllVowels(vowel_list)
-//    }
+    fun insertAll(vowel_list : List<Vowels>) : Completable {
+
+        return vowelInstanceDao.insertAllVowels(vowel_list)
+    }
 }

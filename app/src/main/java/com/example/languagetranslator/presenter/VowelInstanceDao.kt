@@ -16,6 +16,6 @@ interface VowelInstanceDao {
     @Insert
     fun insertVowel(vararg vowel : Vowels) : Completable
 
-//    @Insert
-//    fun insertAllVowels(vowel: List<Vowels>) : Completable
+    @Insert
+    fun insertAllVowels(vowel: List<Vowels>) : Completable
 }
