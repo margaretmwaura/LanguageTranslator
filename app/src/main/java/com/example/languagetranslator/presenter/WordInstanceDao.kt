@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import com.example.languagetranslator.model.Vowels
 import com.example.languagetranslator.model.WordInstance
 import io.reactivex.Completable
 
@@ -21,5 +22,14 @@ interface WordInstanceDao {
 
     @Delete
     fun delete(todo: WordInstance)
+
+    @Query("SELECT * FROM vowels")
+    fun getAllVowels() : LiveData<List<Vowels>>
+
+    @Insert
+    fun insertVowel(vararg vowel : Vowels) : Completable
+
+    @Insert
+    fun insertAllVowels(vararg vowel_list : List<Vowels>) : Completable
 
 }

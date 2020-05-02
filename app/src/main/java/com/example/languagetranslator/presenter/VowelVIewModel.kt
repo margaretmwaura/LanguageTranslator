@@ -11,69 +11,78 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import okhttp3.ResponseBody
 import java.io.*
 import javax.inject.Inject
 
 
-class VowelVIewModel @Inject constructor(val network : Network):  ViewModel(){
+class VowelVIewModel @Inject constructor(val network : Network):  ViewModel() {
     private var viewModelJob = Job()
 
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     private var vowels = MutableLiveData<List<Vowels>>()
 
-    private val _vowels : LiveData<List<Vowels>>
-         get() = vowels
+    private val _vowels: LiveData<List<Vowels>>
+        get() = vowels
+
+    private val mutex = Mutex();
 
     init {
         getAllTheVowels()
-        getAudio()
     }
 
-    private fun getAllTheVowels()
-    {
+    private fun getAllTheVowels() {
         coroutineScope.launch {
-
-            Log.e("We","We is doing this people")
             var results = network.getVoewlData()
 
             try {
-                 val data = results.await()
-                Log.d("Data","Here is the data my people $data")
-                 vowels.postValue(data)
-            }catch (e : Exception)
-            {
-                 Log.e("Babes","Babes there was an error ${e.message}")
+                val data = results.await()
+
+                Log.d("Data", "Here is the data my people $data")
+
+                vowels.postValue(data)
+
+                data.forEach{
+                    getAudio(it.filename)
+                }
+            } catch (e: Exception) {
+                Log.e("Babes", "Babes there was an error ${e.message}")
             }
         }
     }
 
-    private fun getAudio()
-    {
-        coroutineScope.launch {
-            var audios = network.getAudios()
+    private suspend fun getAudio(filename : String) {
+        mutex.withLock {
 
-            try
-            {
+            var audios = network.getAudios(filename)
+
+            try {
                 val data = audios.await()
+
+                Log.e("ArrayData", "I am trying to get the audio as an array ${data.contentType()}")
+
                 writeResponseBodyToDisk(data)
 
-                Log.d("Data","Here is the data my people ${data.byteStream()}")
-
-            }catch (e : Exception)
-            {
-                Log.e("Babes","Babes there was an error while getting audio${e.message}")
+            } catch (e: Exception) {
+                Log.e("Babes", "Babes there was an error while getting audio${e.message}")
             }
         }
+
     }
+
 
     private fun writeResponseBodyToDisk(body: ResponseBody): Boolean {
         return try {
 //            (getExternalFilesDir(null) + File.separator.toString() +
-            val auiodfile = File(Environment.getExternalStorageDirectory() ,  "audio.mp3")
+            val auiodfile = File(Environment.getExternalStorageDirectory(), "audio.mp3")
 
-            Log.e("SITE","Where the files are being saved ${Environment.getExternalStorageDirectory()}")
+            Log.e(
+                "SITE",
+                "Where the files are being saved ${Environment.getExternalStorageDirectory()}"
+            )
 
             var inputStream: InputStream? = null
 
@@ -108,7 +117,10 @@ class VowelVIewModel @Inject constructor(val network : Network):  ViewModel(){
                 true
             } catch (e: IOException) {
 
-                Log.e("People","There was an error while trying to download the file one ${e.message}" )
+                Log.e(
+                    "People",
+                    "There was an error while trying to download the file one ${e.message}"
+                )
 
                 false
 
@@ -120,7 +132,7 @@ class VowelVIewModel @Inject constructor(val network : Network):  ViewModel(){
             }
         } catch (e: IOException) {
 
-            Log.e("People","There was an error while trying to download the file two ${e.message}" )
+            Log.e("People", "There was an error while trying to download the file two ${e.message}")
 
             false
         }

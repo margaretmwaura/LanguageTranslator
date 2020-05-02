@@ -43,22 +43,22 @@ class AlphabetsFragment : DaggerFragment() {
         binding.lifecycleOwner = this
 
         vowelViewModel = ViewModelProviders.of(this, mViewModelFactory).get(VowelVIewModel::class.java)
-
-        val mp = MediaPlayer()
-        try {
-
-            mp.setDataSource(Environment.getExternalStorageDirectory().path.toString() + "/audio.mp3")
-
-            mp.prepare()
-
-        } catch (e: Exception) {
-
-            e.printStackTrace()
-        }
-
-        binding.audio.setOnClickListener {
-            mp.start()
-        }
+//
+//        val mp = MediaPlayer()
+//        try {
+//
+//            mp.setDataSource(Environment.getExternalStorageDirectory().path.toString() + "/audio.mp3")
+//
+//            mp.prepare()
+//
+//        } catch (e: Exception) {
+//
+//            e.printStackTrace()
+//        }
+//
+//        binding.audio.setOnClickListener {
+//            mp.start()
+//        }
         return binding.root
     }
 
