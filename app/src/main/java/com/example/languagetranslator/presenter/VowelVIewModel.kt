@@ -21,7 +21,7 @@ import java.io.*
 import javax.inject.Inject
 
 
-class VowelVIewModel @Inject constructor(application: Application): AndroidViewModel(application) {
+class VowelVIewModel @Inject constructor(application: Application, vowelRepository: VowelRepository): AndroidViewModel(application) {
     private var viewModelJob = Job()
 
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
@@ -31,34 +31,8 @@ class VowelVIewModel @Inject constructor(application: Application): AndroidViewM
     private val _vowels: LiveData<List<Vowels>>
         get() = vowels
 
-    private lateinit var repository : VowelRepository
+
     init {
-//        val vowelDao = AppDatabase.invoke(application).vowelInstanceDao()
-//        repository = VowelRepository(vowelDao)
-//        getAllTheVowels()
+        vowels.postValue(vowelRepository.allVowels)
     }
-
-//    private fun getAllTheVowels() {
-//        coroutineScope.launch {
-//            var results = network.getVoewlData()
-//
-//            try {
-//                val data = results.await()
-//
-//                Log.d("Data", "Here is the data my people $data")
-//
-//                vowels.postValue(data)
-//
-////                repository.insertAll(data)
-//
-////                data.forEach{
-////                    getAudio(it.filename)
-////                }
-//            } catch (e: Exception) {
-//                Log.e("Babes", "Babes there was an error ${e.message}")
-//            }
-//        }
-//    }
-
-
 }

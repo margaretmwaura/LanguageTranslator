@@ -21,8 +21,6 @@ import androidx.lifecycle.Observer
 
 class MainActivity : AppCompatActivity() , HasSupportFragmentInjector
 {
-//    @Inject
-//    lateinit var mViewModelFactory : ViewModelFactory
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
@@ -33,7 +31,7 @@ class MainActivity : AppCompatActivity() , HasSupportFragmentInjector
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        
+
         WorkManager.getInstance().enqueue(
             OneTimeWorkRequestBuilder<AudioDataWorker>().build()
         )
@@ -59,10 +57,7 @@ class MainActivity : AppCompatActivity() , HasSupportFragmentInjector
             }
 
             override fun onPageSelected(position: Int) {
-//                if (position === vpIntro.getAdapter()?.getCount()?.minus(1)) {
-//                    val reg = Intent(this@MainActivity, Splash::class.java)
-//                    startActivity(reg)
-//                }
+
             }
 
         })
