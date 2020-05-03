@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import com.example.languagetranslator.databinding.FragmentAlphabetsBinding
+import com.example.languagetranslator.databinding.FragmentAlphabetsBindingImpl
+import com.example.languagetranslator.presenter.NewWordViewModel
 import com.example.languagetranslator.presenter.ViewModelFactory
 import com.example.languagetranslator.presenter.VowelVIewModel
 import dagger.android.support.AndroidSupportInjection
@@ -28,11 +30,6 @@ class AlphabetsFragment : DaggerFragment() {
         super.onAttach(context)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,7 +38,7 @@ class AlphabetsFragment : DaggerFragment() {
         val binding = FragmentAlphabetsBinding.inflate(inflater,container,false)
 
         binding.lifecycleOwner = this
-
+//
         vowelViewModel = ViewModelProviders.of(this, mViewModelFactory).get(VowelVIewModel::class.java)
 //
 //        val mp = MediaPlayer()
@@ -63,6 +60,11 @@ class AlphabetsFragment : DaggerFragment() {
     }
 
     companion object {
-
+        @JvmStatic
+        fun instantiate(args: Bundle?) {
+            val frag = AlphabetsFragment()
+            frag.arguments = args
+        }
     }
+
 }

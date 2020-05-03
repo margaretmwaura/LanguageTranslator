@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
-import com.example.languagetranslator.model.IntroViewPagerAdapter
 import com.example.languagetranslator.R
+import com.example.languagetranslator.model.IntroViewPagerAdapter
 import com.example.languagetranslator.presenter.ViewModelFactory
 import com.example.languagetranslator.presenter.ZoomOutPageTransformer
 import dagger.android.AndroidInjection
@@ -17,8 +17,8 @@ import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() , HasSupportFragmentInjector
 {
-    @Inject
-    lateinit var mViewModelFactory : ViewModelFactory
+//    @Inject
+//    lateinit var mViewModelFactory : ViewModelFactory
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
@@ -30,18 +30,13 @@ class MainActivity : AppCompatActivity() , HasSupportFragmentInjector
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val introViewPagerAdapter =
-            IntroViewPagerAdapter(
-                supportFragmentManager
-            )
+        val introViewPagerAdapter = IntroViewPagerAdapter(supportFragmentManager)
         vpIntro.adapter = introViewPagerAdapter
         vpIntro.setPageTransformer(true,
             ZoomOutPageTransformer()
         )
 
         tabLayout.setupWithViewPager(vpIntro, true);
-
-        val bg_color = resources.getIntArray(R.array.bg_color)
 
         vpIntro.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
             override fun onPageScrollStateChanged(state: Int) {
@@ -53,7 +48,7 @@ class MainActivity : AppCompatActivity() , HasSupportFragmentInjector
                 positionOffsetPixels: Int
             ) {
 
-                Log.d("Scrolling","Scrolling is happening");
+                Log.d("Scrolling","Scrolling is happening at position ${position}");
             }
 
             override fun onPageSelected(position: Int) {

@@ -51,6 +51,12 @@ class ListFragment : DaggerFragment() {
 
     companion object
     {
-
+        @JvmStatic
+        fun instantiate(args: Bundle?) {
+            val frag = ListFragment()
+            frag.arguments = args
+        }
     }
+
+
 }

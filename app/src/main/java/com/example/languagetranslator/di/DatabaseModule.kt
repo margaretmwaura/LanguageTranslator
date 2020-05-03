@@ -19,12 +19,12 @@ class DatabaseModule {
 
     @Singleton
     @Provides
-    @Named("VowelDao")
+    @Named("VowelInstanceDao")
     fun provideVowelDao(db: AppDatabase) = db.vowelInstanceDao()
 
     @Singleton
     @Provides
-    fun provideVowelRepository(@Named("VowelDao") vowelInstanceDao: VowelInstanceDao) : VowelRepository{
+    fun provideVowelRepository(@Named("VowelInstanceDao") vowelInstanceDao: VowelInstanceDao) : VowelRepository{
         return VowelRepository(vowelInstanceDao)
     }
 }

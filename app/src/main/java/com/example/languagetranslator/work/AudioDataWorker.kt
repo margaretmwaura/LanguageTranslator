@@ -20,8 +20,10 @@ import javax.inject.Inject
 class AudioDataWorker(val vowelRepository: VowelRepository,val networkService: Network,appContext: Context, params: WorkerParameters) : Worker(appContext, params)  {
 
     override fun doWork(): Result {
+        Log.d("People" , "This is happening ");
         val vowels = vowelRepository.allVowels
         vowels.forEach {
+            Log.e("PPLE","Yaaasss")
             getAudio(it.filename)
         }
         return Result.success()

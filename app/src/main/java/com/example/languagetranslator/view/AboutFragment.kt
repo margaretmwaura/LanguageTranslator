@@ -24,6 +24,10 @@ class AboutFragment : Fragment() {
     }
 
     companion object {
-
+        @JvmStatic
+        fun instantiate(args: Bundle?) {
+            val frag = AboutFragment()
+            frag.arguments = args
+        }
     }
 }
