@@ -1,10 +1,11 @@
-package com.example.languagetranslator
+package com.example.languagetranslator.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.languagetranslator.R
 
 class AboutFragment : Fragment() {
 
@@ -23,6 +24,10 @@ class AboutFragment : Fragment() {
     }
 
     companion object {
-
+        @JvmStatic
+        fun instantiate(args: Bundle?) {
+            val frag = AboutFragment()
+            frag.arguments = args
+        }
     }
 }
