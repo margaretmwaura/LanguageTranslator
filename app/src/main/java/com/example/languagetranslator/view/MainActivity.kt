@@ -5,15 +5,19 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
+import androidx.work.*
 import com.example.languagetranslator.R
 import com.example.languagetranslator.model.IntroViewPagerAdapter
 import com.example.languagetranslator.presenter.ViewModelFactory
 import com.example.languagetranslator.presenter.ZoomOutPageTransformer
+import com.example.languagetranslator.work.AudioDataWorker
 import dagger.android.AndroidInjection
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import androidx.lifecycle.Observer
 
 class MainActivity : AppCompatActivity() , HasSupportFragmentInjector
 {
@@ -29,7 +33,10 @@ class MainActivity : AppCompatActivity() , HasSupportFragmentInjector
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        
+        WorkManager.getInstance().enqueue(
+            OneTimeWorkRequestBuilder<AudioDataWorker>().build()
+        )
         val introViewPagerAdapter = IntroViewPagerAdapter(supportFragmentManager)
         vpIntro.adapter = introViewPagerAdapter
         vpIntro.setPageTransformer(true,
