@@ -1,13 +1,13 @@
 package com.example.languagetranslator.service
 
 import com.google.gson.GsonBuilder
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
 object RetrofitFactory {
-    const val BASE_URL = "http://8b9d561e.ngrok.io"
+    const val BASE_URL = "http://ccb36984.ngrok.io"
 
     var gson = GsonBuilder()
         .setLenient()
@@ -17,7 +17,7 @@ object RetrofitFactory {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build().create(apiservice::class.java)
     }
 }

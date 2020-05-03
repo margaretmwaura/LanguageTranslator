@@ -1,25 +1,27 @@
 package com.example.languagetranslator.service
 
+import android.util.Log
 import com.example.languagetranslator.model.Vowels
+import io.reactivex.Observable
 import kotlinx.coroutines.Deferred
-import okhttp3.Response
+import okhttp3.Call
+import retrofit2.Callback
 import okhttp3.ResponseBody
+import retrofit2.Response
 import javax.inject.Inject
 
 class Network @Inject constructor(){
 
-    fun getVoewlData() : Deferred<List<Vowels>>
+    fun getVowellData() : Observable<List<Vowels>>
     {
-        var listResult : Deferred<List<Vowels>>? = null
-        listResult = RetrofitFactory.makeRetrofitService().getVowelData()
-        return  listResult
+        var result = RetrofitFactory.makeRetrofitService().getVowelData()
+        return result
     }
 
-    fun getAudios(filename : String) : ResponseBody
+    fun getAudios(filename : String) : Observable<ResponseBody>
     {
-        var audio = RetrofitFactory.makeRetrofitService().getAudios(filename)
-
-        return audio;
+        var result = RetrofitFactory.makeRetrofitService().getAudios(filename)
+        return result;
     }
 }
 

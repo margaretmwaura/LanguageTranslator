@@ -7,10 +7,14 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.work.CoroutineWorker
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import com.example.languagetranslator.model.Vowels
 import com.example.languagetranslator.presenter.ViewModelFactory
 import com.example.languagetranslator.presenter.VowelRepository
 import com.example.languagetranslator.presenter.VowelVIewModel
 import com.example.languagetranslator.service.Network
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.sync.withLock
 import okhttp3.ResponseBody
 import java.io.*
@@ -22,20 +26,45 @@ class AudioDataWorker(val vowelRepository: VowelRepository,val networkService: N
     override fun doWork(): Result {
         Log.e("People" , "This is happening ")
 
-        val vowels = vowelRepository.allVowels
-        Log.e("Mapeople","The vowels ${vowels}")
-        vowels.forEach {
-            Log.e("PPLE","Yaaasss")
-            getAudio(it.filename)
-        }
+        getVowels()
+
         return Result.success()
     }
     @Synchronized
     private fun getAudio(filename: String) {
-        var audio = networkService.getAudios(filename)
-        writeResponseBodyToDisk(audio)
+        val compositeDisposable = CompositeDisposable()
+        compositeDisposable.add(
+            networkService.getAudios(filename).observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({
+                    it->  writeResponseBodyToDisk(it)
+                }, {
+                    it -> Log.e("Error", "We got an error")
+                }))
+
     }
 
+    private fun getVowels()
+    {
+        val compositeDisposable = CompositeDisposable()
+        compositeDisposable.add(
+                networkService.getVowellData().observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe({response -> onResponse(response)}, {t -> onFailure(t) }))
+
+    }
+    private fun onFailure(t: Throwable) {
+        Log.e("GUYS", "Imagine I did not make it , I am sad")
+    }
+
+    private fun onResponse(response: List<Vowels>) {
+        Log.e("YAAAS", "wEH ")
+        response.forEach {
+            Log.e("PPLE", "Yaaasss")
+            getAudio(it.filename)
+        }
+
+    }
     private fun writeResponseBodyToDisk(body: ResponseBody): Boolean {
         return try {
 //            (getExternalFilesDir(null) + File.separator.toString() +

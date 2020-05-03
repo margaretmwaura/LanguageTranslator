@@ -38,7 +38,7 @@ class AlphabetsFragment : DaggerFragment() {
         val binding = FragmentAlphabetsBinding.inflate(inflater,container,false)
 
         binding.lifecycleOwner = this
-//
+
         vowelViewModel = ViewModelProviders.of(this, mViewModelFactory).get(VowelVIewModel::class.java)
 //
 //        val mp = MediaPlayer()
