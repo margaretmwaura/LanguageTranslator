@@ -6,6 +6,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Network
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -99,9 +100,7 @@ class MainActivity : AppCompatActivity() , HasSupportFragmentInjector
         }
         else
         {
-            WorkManager.getInstance().enqueue(
-                OneTimeWorkRequestBuilder<AudioDataWorker>().build()
-            )
+            gettingDataFromTheApi()
         }
     }
 
@@ -131,10 +130,9 @@ class MainActivity : AppCompatActivity() , HasSupportFragmentInjector
 
             Log.i("TAG", "Permission has been denied by user")
         } else {
+            gettingDataFromTheApi()
             Log.i("TAG", "Permission has been granted by user")
-            WorkManager.getInstance().enqueue(
-                OneTimeWorkRequestBuilder<AudioDataWorker>().build()
-            )
+
         }
 
     }
@@ -170,6 +168,34 @@ class MainActivity : AppCompatActivity() , HasSupportFragmentInjector
 
         alertDialog.setCancelable(false)
         alertDialog.show()
+    }
+
+    private fun gettingDataFromTheApi()
+    {
+        val constraints = Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build()
+
+        val work  = OneTimeWorkRequestBuilder<AudioDataWorker>()
+                .setConstraints(constraints)
+                .build()
+
+        WorkManager.getInstance().enqueue(work)
+
+        WorkManager.getInstance().getWorkInfoByIdLiveData(work.id)
+                .observe(this, Observer { workInfo ->
+                    // Check if the current work's state is "successfully finished"
+                    if (workInfo != null && workInfo.state.isFinished)
+                    {
+                        if(workInfo.state == WorkInfo.State.SUCCEEDED)
+                        {
+                            val intent = Intent(this@MainActivity,Alert::class.java)
+                            startActivity(intent)
+                            Log.e("DamnPeople","We finished the work guyss ")
+                        }
+
+                    }
+                })
     }
 
 

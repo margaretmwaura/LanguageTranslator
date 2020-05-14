@@ -54,7 +54,7 @@ class AudioDataWorker(val vowelRepository: VowelRepository,val networkService: N
 
     }
     private fun onFailure(t: Throwable) {
-        Log.e("GUYS", "Imagine I did not make it , I am sad")
+        Log.e("GUYS", "Imagine I did not make it , I am sad ${t.message}")
     }
 
     private fun onResponse(response: List<Vowels>) {
