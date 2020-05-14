@@ -18,7 +18,7 @@ class VowelVIewModel @Inject constructor(application: Application, vowelReposito
 
     private var vowels = MutableLiveData<List<Vowels>>()
 
-    private val _vowels: LiveData<List<Vowels>>
+    val allVowels: LiveData<List<Vowels>>
         get() = vowels
 
 

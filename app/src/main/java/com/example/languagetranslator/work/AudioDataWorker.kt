@@ -3,19 +3,15 @@ package com.example.languagetranslator.work
 import android.content.Context
 import android.os.Environment
 import android.util.Log
-import androidx.lifecycle.ViewModelProviders
-import androidx.work.CoroutineWorker
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.example.languagetranslator.model.Vowels
-import com.example.languagetranslator.presenter.ViewModelFactory
 import com.example.languagetranslator.presenter.VowelRepository
-import com.example.languagetranslator.presenter.VowelVIewModel
 import com.example.languagetranslator.service.Network
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.observers.DisposableCompletableObserver
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.sync.withLock
 import okhttp3.ResponseBody
 import java.io.*
 import javax.inject.Inject
@@ -48,7 +44,7 @@ class AudioDataWorker(val vowelRepository: VowelRepository,val networkService: N
     {
         val compositeDisposable = CompositeDisposable()
         compositeDisposable.add(
-                networkService.getVowellData().observeOn(AndroidSchedulers.mainThread())
+                networkService.getVowellData()
                 .subscribeOn(Schedulers.io())
                 .subscribe({response -> onResponse(response)}, {t -> onFailure(t) }))
 
@@ -58,23 +54,30 @@ class AudioDataWorker(val vowelRepository: VowelRepository,val networkService: N
     }
 
     private fun onResponse(response: List<Vowels>) {
-        Log.e("YAAAS", "wEH ")
-        response.forEach {
-            Log.e("PPLE", "Yaaasss")
-            getAudio(it.filename)
-        }
+        Log.e("YAAAS", "wEH the alphabets data ${response}")
+        val completable = vowelRepository.insertAll(response)
+        completable.subscribeWith(object : DisposableCompletableObserver(){
+                override fun onComplete() {
+                    Log.d("MaGuys","This is what we sent to the database ${vowelRepository.allVowels}")
+                    response.forEach {
+                        Log.e("PPLE", "Yaaasss")
+                        getAudio(it.filename)
+                    }
+                }
+                override fun onError(e: Throwable) {
+                    Log.e("Error","Ma guys I encountered an error while writting to the dtabase ${e.message}")
+                }
+
+            });
 
     }
     private fun writeResponseBodyToDisk(body: ResponseBody): Boolean {
         return try {
-//            (getExternalFilesDir(null) + File.separator.toString() +
             val auiodfile = File(Environment.getExternalStorageDirectory(), "audio.mp3")
-
             Log.e(
                 "SITE",
                 "Where the files are being saved ${Environment.getExternalStorageDirectory()}"
             )
-
             var inputStream: InputStream? = null
 
             var outputStream: OutputStream? = null

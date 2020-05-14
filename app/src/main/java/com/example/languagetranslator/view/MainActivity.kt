@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -189,9 +191,12 @@ class MainActivity : AppCompatActivity() , HasSupportFragmentInjector
                     {
                         if(workInfo.state == WorkInfo.State.SUCCEEDED)
                         {
-                            val intent = Intent(this@MainActivity,Alert::class.java)
-                            startActivity(intent)
-                            Log.e("DamnPeople","We finished the work guyss ")
+                            val alert= androidx.appcompat.app.AlertDialog.Builder(this)
+                            val factory = LayoutInflater.from(this)
+                            val view: View = factory.inflate(R.layout.alert_dialog, null)
+                            alert.setCancelable(true)
+                            alert.setView(view)
+                            alert.show()
                         }
 
                     }

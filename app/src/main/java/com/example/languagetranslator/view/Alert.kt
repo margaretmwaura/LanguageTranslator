@@ -17,12 +17,6 @@ class Alert : AppCompatActivity() {
         setContentView(R.layout.activity_alert)
         Log.d("AlertDialogActivity","AlertDialog activity has been started")
 
-        val alert= AlertDialog.Builder(this)
-        val factory = LayoutInflater.from(this)
-        val view: View = factory.inflate(R.layout.alert_dialog, null)
-        alert.setCancelable(true)
-        alert.setView(view)
-        alert.show()
     }
 
 }

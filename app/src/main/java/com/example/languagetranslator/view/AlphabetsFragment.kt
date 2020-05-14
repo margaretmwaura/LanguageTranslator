@@ -4,12 +4,15 @@ import android.content.Context
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.languagetranslator.databinding.FragmentAlphabetsBinding
 import com.example.languagetranslator.databinding.FragmentAlphabetsBindingImpl
+import com.example.languagetranslator.model.VowelInstanceAdapter
 import com.example.languagetranslator.presenter.NewWordViewModel
 import com.example.languagetranslator.presenter.ViewModelFactory
 import com.example.languagetranslator.presenter.VowelVIewModel
@@ -39,7 +42,32 @@ class AlphabetsFragment : DaggerFragment() {
 
         binding.lifecycleOwner = this
 
+        val adapter = VowelInstanceAdapter(VowelInstanceAdapter.VowelInstanceListener{
+
+        })
         vowelViewModel = ViewModelProviders.of(this, mViewModelFactory).get(VowelVIewModel::class.java)
+
+        vowelViewModel.allVowels.observe(activity!!, Observer {
+            Log.e("Alphabets","These are the alphabets we have gotten ${it}")
+            adapter.submitList(it)
+        })
+
+        binding.alphabetsRecyclerViews.adapter= adapter
+        return binding.root
+    }
+
+    companion object {
+        @JvmStatic
+        fun instantiate(args: Bundle?) {
+            val frag = AlphabetsFragment()
+            frag.arguments = args
+        }
+    }
+
+}
+
+
+
 //
 //        val mp = MediaPlayer()
 //        try {
@@ -56,15 +84,3 @@ class AlphabetsFragment : DaggerFragment() {
 //        binding.audio.setOnClickListener {
 //            mp.start()
 //        }
-        return binding.root
-    }
-
-    companion object {
-        @JvmStatic
-        fun instantiate(args: Bundle?) {
-            val frag = AlphabetsFragment()
-            frag.arguments = args
-        }
-    }
-
-}

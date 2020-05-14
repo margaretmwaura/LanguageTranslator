@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.example.languagetranslator.presenter.VowelInstanceDao
 import com.example.languagetranslator.presenter.WordInstanceDao
 
-@Database(entities = arrayOf(WordInstance::class,Vowels::class), version = 1)
+@Database(entities = [WordInstance::class, Vowels::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun wordInstanceDao(): WordInstanceDao
     abstract fun vowelInstanceDao() : VowelInstanceDao
