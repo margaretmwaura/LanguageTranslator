@@ -2,9 +2,13 @@ package com.example.languagetranslator.view
 
 import android.Manifest
 import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.net.Network
 import android.net.Uri
@@ -14,6 +18,7 @@ import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -31,6 +36,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import androidx.lifecycle.Observer
+import kotlinx.android.synthetic.main.alert_dialog.*
+import kotlinx.android.synthetic.main.alert_dialog.view.*
+import org.w3c.dom.Text
 
 class MainActivity : AppCompatActivity() , HasSupportFragmentInjector
 {
@@ -38,6 +46,7 @@ class MainActivity : AppCompatActivity() , HasSupportFragmentInjector
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
     private val STORAGE_REQUEST_CODE = 101
+    private lateinit var alert : androidx.appcompat.app.AlertDialog
 
     override fun supportFragmentInjector() = dispatchingAndroidInjector
 
@@ -74,6 +83,10 @@ class MainActivity : AppCompatActivity() , HasSupportFragmentInjector
             }
 
         })
+
+        createAlertDialogBox()
+
+        registerReceiver()
     }
 
     private fun setupPermissions() {
@@ -172,6 +185,25 @@ class MainActivity : AppCompatActivity() , HasSupportFragmentInjector
         alertDialog.show()
     }
 
+    private fun createAlertDialogBox()
+    {
+        val builder = androidx.appcompat.app.AlertDialog.Builder(this)
+        val factory = LayoutInflater.from(this)
+        val view  = factory.inflate(R.layout.alert_dialog, null)
+        alert = builder.create()
+        alert.setView(view)
+        alert.setCancelable(false)
+    }
+
+    private fun registerReceiver()
+    {
+        // This receiver right here will be the one that will be used to cancel
+        // the dialog box and also change the text displaying
+        val filter = IntentFilter()
+        filter.addAction("com.hello.action")
+        registerReceiver(receiver, filter)
+    }
+
     private fun gettingDataFromTheApi()
     {
         val constraints = Constraints.Builder()
@@ -183,7 +215,6 @@ class MainActivity : AppCompatActivity() , HasSupportFragmentInjector
                 .build()
 
         WorkManager.getInstance().enqueue(work)
-
         WorkManager.getInstance().getWorkInfoByIdLiveData(work.id)
                 .observe(this, Observer { workInfo ->
                     // Check if the current work's state is "successfully finished"
@@ -191,11 +222,6 @@ class MainActivity : AppCompatActivity() , HasSupportFragmentInjector
                     {
                         if(workInfo.state == WorkInfo.State.SUCCEEDED)
                         {
-                            val alert= androidx.appcompat.app.AlertDialog.Builder(this)
-                            val factory = LayoutInflater.from(this)
-                            val view: View = factory.inflate(R.layout.alert_dialog, null)
-                            alert.setCancelable(true)
-                            alert.setView(view)
                             alert.show()
                         }
 
@@ -203,6 +229,13 @@ class MainActivity : AppCompatActivity() , HasSupportFragmentInjector
                 })
     }
 
+    var receiver: BroadcastReceiver = object : BroadcastReceiver() {
 
+        override fun onReceive(context: Context, intent: Intent) {
+
+            alert.textView3.text = getString(R.string.complete)
+            alert.setCancelable(true)
+        }
+    }
 
 }

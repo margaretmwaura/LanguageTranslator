@@ -1,6 +1,7 @@
 package com.example.languagetranslator.work
 
 import android.content.Context
+import android.content.Intent
 import android.os.Environment
 import android.util.Log
 import androidx.work.Worker
@@ -17,8 +18,9 @@ import java.io.*
 import javax.inject.Inject
 
 
-class AudioDataWorker(val vowelRepository: VowelRepository,val networkService: Network,appContext: Context, params: WorkerParameters) : Worker(appContext, params)  {
+class AudioDataWorker(val vowelRepository: VowelRepository,val networkService: Network,val appContext: Context, params: WorkerParameters) : Worker(appContext, params)  {
 
+    private var count : Int = 0
     override fun doWork(): Result {
         Log.e("People" , "This is happening ")
 
@@ -27,13 +29,13 @@ class AudioDataWorker(val vowelRepository: VowelRepository,val networkService: N
         return Result.success()
     }
     @Synchronized
-    private fun getAudio(filename: String) {
+    private fun getAudio(filename: String , index : Int) {
         val compositeDisposable = CompositeDisposable()
         compositeDisposable.add(
             networkService.getAudios(filename).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    it->  writeResponseBodyToDisk(it)
+                    it->  writeResponseBodyToDisk(it , index)
                 }, {
                     it -> Log.e("Error", "We got an error")
                 }))
@@ -55,13 +57,14 @@ class AudioDataWorker(val vowelRepository: VowelRepository,val networkService: N
 
     private fun onResponse(response: List<Vowels>) {
         Log.e("YAAAS", "wEH the alphabets data ${response}")
+        count = response.size - 1
+        Log.e("MaGys","This is the count of the objects ${count}")
         val completable = vowelRepository.insertAll(response)
         completable.subscribeWith(object : DisposableCompletableObserver(){
                 override fun onComplete() {
-                    Log.d("MaGuys","This is what we sent to the database ${vowelRepository.allVowels}")
-                    response.forEach {
+                    response.forEachIndexed {index , vowel ->
                         Log.e("PPLE", "Yaaasss")
-                        getAudio(it.filename)
+                        getAudio(vowel.filename , index)
                     }
                 }
                 override fun onError(e: Throwable) {
@@ -71,13 +74,14 @@ class AudioDataWorker(val vowelRepository: VowelRepository,val networkService: N
             });
 
     }
-    private fun writeResponseBodyToDisk(body: ResponseBody): Boolean {
+    private fun writeResponseBodyToDisk(body: ResponseBody , index: Int): Boolean {
         return try {
             val auiodfile = File(Environment.getExternalStorageDirectory(), "audio.mp3")
             Log.e(
                 "SITE",
                 "Where the files are being saved ${Environment.getExternalStorageDirectory()}"
             )
+            Log.e("INDEX","This is the index ${index}")
             var inputStream: InputStream? = null
 
             var outputStream: OutputStream? = null
@@ -129,6 +133,14 @@ class AudioDataWorker(val vowelRepository: VowelRepository,val networkService: N
             Log.e("People", "There was an error while trying to download the file two ${e.message}")
 
             false
+        }
+        finally {
+            if(index == count)
+            {
+                val local = Intent()
+                local.action = "com.hello.action"
+                appContext.sendBroadcast(local)
+            }
         }
     }
     class Factory @Inject constructor(
