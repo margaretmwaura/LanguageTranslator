@@ -11,9 +11,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.languagetranslator.databinding.FragmentAlphabetsBinding
-import com.example.languagetranslator.databinding.FragmentAlphabetsBindingImpl
 import com.example.languagetranslator.model.VowelInstanceAdapter
-import com.example.languagetranslator.presenter.NewWordViewModel
 import com.example.languagetranslator.presenter.ViewModelFactory
 import com.example.languagetranslator.presenter.VowelVIewModel
 import dagger.android.support.AndroidSupportInjection
@@ -51,6 +49,7 @@ class AlphabetsFragment : DaggerFragment() {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+            mp.setOnCompletionListener { performOnEnd() }
             mp.start()
         })
         vowelViewModel = ViewModelProviders.of(this, mViewModelFactory).get(VowelVIewModel::class.java)
@@ -70,6 +69,12 @@ class AlphabetsFragment : DaggerFragment() {
             val frag = AlphabetsFragment()
             frag.arguments = args
         }
+    }
+    private fun performOnEnd()
+    {
+        TODO() // Show an alert dialog then ask the user to try pronouncing the words ,
+        // should turn on permission for mic
+        Log.e("FINISH","We have played the alphabet")
     }
 
 }
