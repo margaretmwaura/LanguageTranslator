@@ -4,23 +4,58 @@
     <data>
         <variable name="vowelInstance"
             type="com.example.languagetranslator.model.Vowels"/>
+        <variable name="variableClickListener"
+            type="com.example.languagetranslator.model.VowelInstanceAdapter.VowelInstanceListener"/>
     </data>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:padding="30dp"
+        android:weightSum="2"
         android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            app:GivenVowel = "@{vowelInstance}"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:textColor="#000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:GivenVowel = "@{vowelInstance}"
+                android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="96dp"
-            app:GivenVowelDescription = "@{vowelInstance}"
-            android:layout_height="21dp" />
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="96dp"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                app:GivenVowelDescription = "@{vowelInstance}"
+                android:layout_height="21dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content">
+            <TextView
+                android:background="@drawable/textview"
+                android:padding="10dp"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:onClick="@{() -> variableClickListener.onClick(vowelInstance)}"
+                android:id="@+id/play_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/play"
+                />
+        </LinearLayout>
     </LinearLayout>
+
 </layout>

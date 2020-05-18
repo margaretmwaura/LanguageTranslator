@@ -56,7 +56,6 @@ class MainActivity : AppCompatActivity() , HasSupportFragmentInjector
         setContentView(R.layout.activity_main)
 
         setupPermissions()
-
         val introViewPagerAdapter = IntroViewPagerAdapter(supportFragmentManager)
         vpIntro.adapter = introViewPagerAdapter
         vpIntro.setPageTransformer(true,
@@ -232,7 +231,6 @@ class MainActivity : AppCompatActivity() , HasSupportFragmentInjector
     var receiver: BroadcastReceiver = object : BroadcastReceiver() {
 
         override fun onReceive(context: Context, intent: Intent) {
-
             alert.textView3.text = getString(R.string.complete)
             alert.setCancelable(true)
         }

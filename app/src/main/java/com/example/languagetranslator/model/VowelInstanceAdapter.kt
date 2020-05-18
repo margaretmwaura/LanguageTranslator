@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.languagetranslator.databinding.AlphabetInstanceViewholderBinding
-import com.example.languagetranslator.databinding.WordInstanceViewholderBinding
 
 class VowelInstanceAdapter(val clickListener: VowelInstanceListener) : ListAdapter<Vowels, RecyclerView.ViewHolder>(EventDiffCallBack()) {
 
@@ -25,6 +24,7 @@ class VowelInstanceAdapter(val clickListener: VowelInstanceListener) : ListAdapt
     class VowelInstanceViewHolder(val binding: AlphabetInstanceViewholderBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(vowelInstance: Vowels, clickListener: VowelInstanceListener) {
             binding.vowelInstance = vowelInstance
+            binding.variableClickListener = clickListener
             binding.executePendingBindings()
         }
     }
@@ -42,6 +42,6 @@ class VowelInstanceAdapter(val clickListener: VowelInstanceListener) : ListAdapt
 
     class VowelInstanceListener(val clickListener : (eventType: Vowels) -> Unit)
     {
-        fun onClick(eventType: Vowels , num : Int) = clickListener(eventType)
+        fun onClick(eventType: Vowels) = clickListener(eventType)
     }
 }

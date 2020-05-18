@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 object RetrofitFactory {
-    const val BASE_URL = "http://93e9e85d.ngrok.io"
+    const val BASE_URL = "http://0d41f233.ngrok.io"
 
     var gson = GsonBuilder()
         .setLenient()

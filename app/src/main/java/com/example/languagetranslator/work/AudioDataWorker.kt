@@ -35,7 +35,7 @@ class AudioDataWorker(val vowelRepository: VowelRepository,val networkService: N
             networkService.getAudios(filename).observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({
-                    it->  writeResponseBodyToDisk(it , index)
+                    it->  writeResponseBodyToDisk(it , index , filename)
                 }, {
                     it -> Log.e("Error", "We got an error")
                 }))
@@ -57,8 +57,9 @@ class AudioDataWorker(val vowelRepository: VowelRepository,val networkService: N
 
     private fun onResponse(response: List<Vowels>) {
         Log.e("YAAAS", "wEH the alphabets data ${response}")
-        count = response.size - 1
+        count = response.size-1
         Log.e("MaGys","This is the count of the objects ${count}")
+        Log.e("Folks","This is what we got ${vowelRepository.allVowels}")
         val completable = vowelRepository.insertAll(response)
         completable.subscribeWith(object : DisposableCompletableObserver(){
                 override fun onComplete() {
@@ -74,9 +75,9 @@ class AudioDataWorker(val vowelRepository: VowelRepository,val networkService: N
             });
 
     }
-    private fun writeResponseBodyToDisk(body: ResponseBody , index: Int): Boolean {
+    private fun writeResponseBodyToDisk(body: ResponseBody , index: Int , filename: String): Boolean {
         return try {
-            val auiodfile = File(Environment.getExternalStorageDirectory(), "audio.mp3")
+            val audiofile = File(Environment.getExternalStorageDirectory(), filename)
             Log.e(
                 "SITE",
                 "Where the files are being saved ${Environment.getExternalStorageDirectory()}"
@@ -95,7 +96,7 @@ class AudioDataWorker(val vowelRepository: VowelRepository,val networkService: N
 
                 inputStream = body.byteStream()
 
-                outputStream = FileOutputStream(auiodfile)
+                outputStream = FileOutputStream(audiofile)
 
                 while (true) {
 

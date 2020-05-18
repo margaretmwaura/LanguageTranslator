@@ -44,6 +44,14 @@ class AlphabetsFragment : DaggerFragment() {
 
         val adapter = VowelInstanceAdapter(VowelInstanceAdapter.VowelInstanceListener{
 
+            val mp = MediaPlayer()
+            try {
+                mp.setDataSource(Environment.getExternalStorageDirectory().path.toString() + "/" + it.filename)
+                mp.prepare()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            mp.start()
         })
         vowelViewModel = ViewModelProviders.of(this, mViewModelFactory).get(VowelVIewModel::class.java)
 
@@ -68,19 +76,3 @@ class AlphabetsFragment : DaggerFragment() {
 
 
 
-//
-//        val mp = MediaPlayer()
-//        try {
-//
-//            mp.setDataSource(Environment.getExternalStorageDirectory().path.toString() + "/audio.mp3")
-//
-//            mp.prepare()
-//
-//        } catch (e: Exception) {
-//
-//            e.printStackTrace()
-//        }
-//
-//        binding.audio.setOnClickListener {
-//            mp.start()
-//        }
