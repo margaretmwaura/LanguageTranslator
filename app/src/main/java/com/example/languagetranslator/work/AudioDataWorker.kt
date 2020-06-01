@@ -37,7 +37,7 @@ class AudioDataWorker(val vowelRepository: VowelRepository,val networkService: N
                 .subscribe({
                     it->  writeResponseBodyToDisk(it , index , filename)
                 }, {
-                    it -> Log.e("Error", "We got an error")
+                    it -> Log.e("Error", "We got an error ${it.message}")
                 }))
 
     }
@@ -59,8 +59,8 @@ class AudioDataWorker(val vowelRepository: VowelRepository,val networkService: N
         Log.e("YAAAS", "wEH the alphabets data ${response}")
         count = response.size-1
         Log.e("MaGys","This is the count of the objects ${count}")
-        Log.e("Folks","This is what we got ${vowelRepository.allVowels}")
         val completable = vowelRepository.insertAll(response)
+        Log.e("Folks","This is what we got ${vowelRepository.allVowels}")
         completable.subscribeWith(object : DisposableCompletableObserver(){
                 override fun onComplete() {
                     response.forEachIndexed {index , vowel ->

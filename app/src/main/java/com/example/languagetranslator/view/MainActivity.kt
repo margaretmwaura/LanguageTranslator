@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity() , HasSupportFragmentInjector
         }
         else
         {
-            gettingDataFromTheApi()
+//            gettingDataFromTheApi()
         }
     }
 
@@ -131,28 +131,40 @@ class MainActivity : AppCompatActivity() , HasSupportFragmentInjector
     ) {
 
         Log.e("Value", ActivityCompat.shouldShowRequestPermissionRationale(this, WRITE_EXTERNAL_STORAGE).toString());
-        if (isUserCheckNeverAskAgain()) {
-            val intent = Intent(
-                Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                Uri.fromParts("package", packageName, null))
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-            return
-        }
 
         if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
 
             Log.i("TAG", "Permission has been denied by user")
+
+            if (!rationaleCheck()) {
+                Log.e("PermissionRatinale","Should show Permission rationale value ${rationaleCheck()}")
+                val intent = Intent(
+                    Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                    Uri.fromParts("package", packageName, null))
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+                return
+            }
+            if(rationaleCheck())
+            {
+                showPermissionReasonAndRequest(
+                    "Notice",
+                    "Hi, we will request STORAGE permission. " +
+                            "This is required for authenticating your device, " +
+                            "please grant it.",
+                    WRITE_EXTERNAL_STORAGE,
+                    STORAGE_REQUEST_CODE
+                )
+            }
         } else {
-            gettingDataFromTheApi()
+//            gettingDataFromTheApi()
             Log.i("TAG", "Permission has been granted by user")
 
         }
 
     }
 
-    private fun isUserCheckNeverAskAgain() =
-        !ActivityCompat.shouldShowRequestPermissionRationale(this, WRITE_EXTERNAL_STORAGE)
+    private fun rationaleCheck() = ActivityCompat.shouldShowRequestPermissionRationale(this, WRITE_EXTERNAL_STORAGE)
     private fun Activity.showPermissionReasonAndRequest(
         title: String,
         message: String,

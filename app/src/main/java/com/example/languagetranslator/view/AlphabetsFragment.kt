@@ -1,5 +1,7 @@
 package com.example.languagetranslator.view
 
+import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -10,12 +12,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.example.languagetranslator.R
 import com.example.languagetranslator.databinding.FragmentAlphabetsBinding
 import com.example.languagetranslator.model.VowelInstanceAdapter
 import com.example.languagetranslator.presenter.ViewModelFactory
 import com.example.languagetranslator.presenter.VowelVIewModel
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.microphone_alert.*
 import javax.inject.Inject
 
 
@@ -25,6 +29,8 @@ class AlphabetsFragment : DaggerFragment() {
     lateinit var mViewModelFactory : ViewModelFactory
 
     private lateinit var vowelViewModel : VowelVIewModel
+
+    private lateinit  var alert : androidx.appcompat.app.AlertDialog
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
@@ -72,9 +78,26 @@ class AlphabetsFragment : DaggerFragment() {
     }
     private fun performOnEnd()
     {
-        TODO() // Show an alert dialog then ask the user to try pronouncing the words ,
-        // should turn on permission for mic
-        Log.e("FINISH","We have played the alphabet")
+       createAlertDialogBox()
+    }
+
+    private fun createAlertDialogBox()
+    {
+        val builder = androidx.appcompat.app.AlertDialog.Builder(activity!!)
+        val factory = LayoutInflater.from(activity!!)
+        val view  = factory.inflate(R.layout.microphone_alert, null)
+        alert = builder.create()
+        alert.setView(view)
+        alert.setCancelable(true)
+        alert.show()
+
+        alert.okay.setOnClickListener {
+            Log.e("OKAY","We have got to turn on the mic")
+        }
+
+        alert.cancel.setOnClickListener {
+            Log.e("CANCEL","They cancelled the practice")
+        }
     }
 
 }
