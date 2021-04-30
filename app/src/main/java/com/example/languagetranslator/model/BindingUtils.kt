@@ -8,7 +8,7 @@ import androidx.databinding.BindingAdapter
 fun TextView.setNameInEnglish(item : WordInstance?)
 {
     item?.let {
-        text = item!!.name_in_english
+        text = item.name_in_english
     }
 }
 
@@ -16,6 +16,22 @@ fun TextView.setNameInEnglish(item : WordInstance?)
 fun TextView.setNameInMyLnaguage(item : WordInstance?)
 {
     item?.let {
-        text = item!!.name_in_your_language
+        text = item.name_in_your_language
+    }
+}
+
+@BindingAdapter("GivenVowel")
+fun TextView.setAlphabet(item : Vowels?)
+{
+    item?.let {
+        text = it.name
+    }
+}
+
+@BindingAdapter("GivenVowelDescription")
+fun TextView.setNameInMyLnaguage(item : Vowels?)
+{
+    item?.let {
+        text = it.description
     }
 }
