@@ -1,7 +1,6 @@
 package com.example.languagetranslator.view
 
-import android.app.Activity
-import android.app.AlertDialog
+
 import android.content.Context
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -13,7 +12,6 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.languagetranslator.R
-import com.example.languagetranslator.databinding.FragmentAlphabetsBinding
 import com.example.languagetranslator.model.VowelInstanceAdapter
 import com.example.languagetranslator.presenter.ViewModelFactory
 import com.example.languagetranslator.presenter.VowelVIewModel
@@ -21,6 +19,7 @@ import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.microphone_alert.*
 import javax.inject.Inject
+import com.example.languagetranslator.databinding.FragmentAlphabetsBinding
 
 
 class AlphabetsFragment : DaggerFragment() {
@@ -46,6 +45,7 @@ class AlphabetsFragment : DaggerFragment() {
 
         binding.lifecycleOwner = this
 
+
         val adapter = VowelInstanceAdapter(VowelInstanceAdapter.VowelInstanceListener{
 
             val mp = MediaPlayer()
@@ -55,7 +55,9 @@ class AlphabetsFragment : DaggerFragment() {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-            mp.setOnCompletionListener { performOnEnd() }
+            mp.setOnCompletionListener {
+//                performOnEnd()
+            }
             mp.start()
         })
         vowelViewModel = ViewModelProviders.of(this, mViewModelFactory).get(VowelVIewModel::class.java)

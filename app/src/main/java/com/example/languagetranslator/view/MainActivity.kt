@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity() , HasSupportFragmentInjector
         }
         else
         {
-//            gettingDataFromTheApi()
+            gettingDataFromTheApi()
         }
     }
 
@@ -157,7 +157,7 @@ class MainActivity : AppCompatActivity() , HasSupportFragmentInjector
                 )
             }
         } else {
-//            gettingDataFromTheApi()
+            gettingDataFromTheApi()
             Log.i("TAG", "Permission has been granted by user")
 
         }
@@ -203,7 +203,7 @@ class MainActivity : AppCompatActivity() , HasSupportFragmentInjector
         val view  = factory.inflate(R.layout.alert_dialog, null)
         alert = builder.create()
         alert.setView(view)
-        alert.setCancelable(false)
+        alert.setCancelable(true)
     }
 
     private fun registerReceiver()
@@ -245,6 +245,7 @@ class MainActivity : AppCompatActivity() , HasSupportFragmentInjector
         override fun onReceive(context: Context, intent: Intent) {
             alert.textView3.text = getString(R.string.complete)
             alert.setCancelable(true)
+            alert.dismiss();
         }
     }
 

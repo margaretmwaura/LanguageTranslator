@@ -1,5 +1,6 @@
 package com.example.languagetranslator.presenter
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.languagetranslator.model.Vowels
 import io.reactivex.Completable
@@ -16,6 +17,8 @@ class VowelRepository @Inject constructor(val vowelInstanceDao: VowelInstanceDao
     }
 
     fun insertAll(vowel_list : List<Vowels>) : Completable {
+
+        Log.d("VowelList","Here is the damn list ${vowel_list}");
 
         return vowelInstanceDao.insertAllVowels(vowel_list)
     }

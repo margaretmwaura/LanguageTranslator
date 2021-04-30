@@ -56,15 +56,11 @@ class AudioDataWorker(val vowelRepository: VowelRepository,val networkService: N
     }
 
     private fun onResponse(response: List<Vowels>) {
-        Log.e("YAAAS", "wEH the alphabets data ${response}")
         count = response.size-1
-        Log.e("MaGys","This is the count of the objects ${count}")
         val completable = vowelRepository.insertAll(response)
-        Log.e("Folks","This is what we got ${vowelRepository.allVowels}")
         completable.subscribeWith(object : DisposableCompletableObserver(){
                 override fun onComplete() {
                     response.forEachIndexed {index , vowel ->
-                        Log.e("PPLE", "Yaaasss")
                         getAudio(vowel.filename , index)
                     }
                 }
@@ -78,10 +74,6 @@ class AudioDataWorker(val vowelRepository: VowelRepository,val networkService: N
     private fun writeResponseBodyToDisk(body: ResponseBody , index: Int , filename: String): Boolean {
         return try {
             val audiofile = File(Environment.getExternalStorageDirectory(), filename)
-            Log.e(
-                "SITE",
-                "Where the files are being saved ${Environment.getExternalStorageDirectory()}"
-            )
             Log.e("INDEX","This is the index ${index}")
             var inputStream: InputStream? = null
 
@@ -108,19 +100,11 @@ class AudioDataWorker(val vowelRepository: VowelRepository,val networkService: N
                     outputStream?.write(fileReader, 0, read)
 
                     fileSizeDownloaded += read.toLong()
-
-                    Log.d("TAG", "file download: $fileSizeDownloaded of $fileSize")
                 }
                 outputStream?.flush()
 
                 true
             } catch (e: IOException) {
-
-                Log.e(
-                    "People",
-                    "There was an error while trying to download the file one ${e.message}"
-                )
-
                 false
 
             } finally {
@@ -130,14 +114,12 @@ class AudioDataWorker(val vowelRepository: VowelRepository,val networkService: N
                 outputStream?.close()
             }
         } catch (e: IOException) {
-
-            Log.e("People", "There was an error while trying to download the file two ${e.message}")
-
             false
         }
         finally {
-            if(index == count)
+            if(index == 50)
             {
+                Log.e("FInalizing","We is finalizing")
                 val local = Intent()
                 local.action = "com.hello.action"
                 appContext.sendBroadcast(local)
