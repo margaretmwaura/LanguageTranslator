@@ -17,7 +17,7 @@ of the local setup of your app, the webscrapper. One is free to change the name.
 
 ### Work in progress
 - Displaying of the words learnt with their transalations in english
-- Functionality to allow a user to speak into microphone in order to match what they are listening to check progress in learning.
+- Functionality to allow a user to speak into microphone in order to match the audio played and their voices to see if they are learning pronounications
 
 
 <img width="319" alt="Screenshot 2021-04-30 at 11 37 55 AM" src="https://user-images.githubusercontent.com/34396651/116681761-110ae200-a9b6-11eb-831a-1dfbedee9647.png">
