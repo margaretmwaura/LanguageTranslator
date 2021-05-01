@@ -15,6 +15,11 @@ of the local setup of your app, the webscrapper. One is free to change the name.
 - Using the repository pattern
 - Dependency injection using dagger
 
+### Libraries used
+*ViewModel - Manage UI related data in a lifecycle conscious way and act as a channel between use cases and ui
+*ViewBinding - support library that allows binding of UI components in layouts to data sources,binds character details and search results to UI
+*Retrofit - To access the Rest Api
+
 ### Work in progress
 - Displaying of the words learnt with their transalations in english
 - Functionality to allow a user to speak into microphone in order to match the audio played and their voices to see if they are learning pronounications
