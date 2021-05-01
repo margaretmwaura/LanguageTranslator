@@ -25,9 +25,3 @@ of the local setup of your app, the webscrapper. One is free to change the name.
 - Functionality to allow a user to speak into microphone in order to match the audio played and their voices to see if they are learning pronounications
 
 
-<img width="319" alt="Screenshot 2021-04-30 at 11 37 55 AM" src="https://user-images.githubusercontent.com/34396651/116681761-110ae200-a9b6-11eb-831a-1dfbedee9647.png">
-
-<img width="280" alt="Screenshot 2021-04-30 at 1 08 26 PM" src="https://user-images.githubusercontent.com/34396651/116681818-2253ee80-a9b6-11eb-9db5-dabf2747ca30.png">
-
-<img width="298" alt="Screenshot 2021-04-30 at 1 10 53 PM" src="https://user-images.githubusercontent.com/34396651/116681860-30097400-a9b6-11eb-90d6-3ce9cec18c37.png">
-
