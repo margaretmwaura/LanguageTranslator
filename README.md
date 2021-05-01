@@ -24,4 +24,4 @@ of the local setup of your app, the webscrapper. One is free to change the name.
 - Displaying of the words learnt with their transalations in english
 - Functionality to allow a user to speak into microphone in order to match the audio played and their voices to see if they are learning pronounications
 
-
+![Untitled design (1)](https://user-images.githubusercontent.com/34396651/116791958-751ccb80-aac6-11eb-9938-65d817f9e776.png)
