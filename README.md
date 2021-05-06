@@ -2,6 +2,8 @@
 
 This is a mobile application that is to help people who would want to learn the french language. 
 
+http://g.recordit.co/0VQg5kpBqw.gif
+
 # Getting Started:
 - Make sure you setup https://github.com/margaretmwaura/WebScrapper project as it serves as the backend.
 - Since it is a local setup , ensure you have ngrok for tunnelling
